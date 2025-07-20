@@ -1,7 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function Question() {
+type QuestionProps = {
+    index: number;
+}; 
+
+export default function Question({ index }: QuestionProps) {
     type QuestionType = {
         questionText: string;
         options: string[];
@@ -59,10 +63,9 @@ export default function Question() {
         return <div className="text-center text-lg">Loading questions...</div>;
     
     } else {
-        const randomIndex = Math.floor(Math.random() * shuffledQuestion.length);
         return (
             <div className="p-4 text-lg">
-                <p className="text-center mb-4 font-bold">{shuffledQuestion[randomIndex].questionText}</p>    
+                <p className="text-center mb-4 font-bold">{shuffledQuestion[index].questionText}</p>    
                 <div className="grid grid-cols-2 gap-4 mt-4">
                     {["A", "B", "C", "D"].map((option) => (
                     <button 
@@ -70,16 +73,16 @@ export default function Question() {
                         disabled={selectedAnswer !== null}
                         className={`p-3 rounded border
                             ${selectedAnswer 
-                                ? option === shuffledQuestion[0].correctLetter ? "bg-green-500 text-white" 
+                                ? option === shuffledQuestion[index].correctLetter ? "bg-green-500 text-white" 
                                 : option === selectedAnswer ? "bg-red-500 text-white" 
                                 : "bg-gray-200" : "bg-white hover:bg-gray-100"
                             }`}
                     >
                         {
-                            option === "A" ? shuffledQuestion[randomIndex].options[0] : 
-                            option === "B" ? shuffledQuestion[randomIndex].options[1] : 
-                            option === "C" ? shuffledQuestion[randomIndex].options[2] : 
-                            shuffledQuestion[randomIndex].options[3]
+                            option === "A" ? shuffledQuestion[index].options[0] : 
+                            option === "B" ? shuffledQuestion[index].options[1] : 
+                            option === "C" ? shuffledQuestion[index].options[2] : 
+                            shuffledQuestion[index].options[3]
                         }
                     </button>
                     ))}
